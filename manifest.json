@@ -1,0 +1,8 @@
+{
+"name":"Meu Remédio",
+"short_name":"Remédio",
+"start_url":"index.html",
+"display":"standalone",
+"background_color":"#ffeaf2",
+"theme_color":"#ff5c9a"
+}

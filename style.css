@@ -1,0 +1,45 @@
+body{
+    font-family: Arial;
+    background:#ffeaf2;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+
+.container{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    width:90%;
+    max-width:350px;
+    text-align:center;
+}
+
+
+input,button{
+
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+
+}
+
+
+button{
+    background:#ff5c9a;
+    color:white;
+    border:0;
+    border-radius:10px;
+}
+
+
+.remedio{
+
+    background:#f5f5f5;
+    padding:10px;
+    margin-top:10px;
+    border-radius:10px;
+
+}
