@@ -1,7 +1,16 @@
 self.addEventListener(
 "install",
-event=>{
+()=>{
 
-console.log("App instalado");
+console.log("Aplicativo instalado");
 
-});
+}
+);
+
+
+
+self.addEventListener(
+"fetch",
+()=>{}
+
+);
