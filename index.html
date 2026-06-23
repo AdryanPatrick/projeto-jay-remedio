@@ -2,57 +2,35 @@
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Nosso Cuidado ❤️</title>
 
 <link rel="stylesheet" href="style.css">
-
-<link rel="manifest" href="manifest.json">
-
 </head>
-
 
 <body>
 
-
-<div class="app">
-
-
 <header>
-
-<img src="foto.jpg" class="foto">
-
-
-<h1>Nosso Cuidado ❤️</h1>
-
-<p id="frase"></p>
-
+  <img src="fotoprincipal.jpeg" class="foto">
+  <h1>Nosso Cuidado ❤️</h1>
+  <p>Dia 5 do tratamento 💊</p>
 </header>
 
+<nav class="menu">
+  <button onclick="setTela('hoje')">Hoje</button>
+  <button onclick="setTela('faltando')">Faltando</button>
+  <button onclick="setTela('progresso')">Progresso</button>
+</nav>
 
+<main id="conteudo"></main>
 
-<section id="lista"></section>
+<div id="modal" class="modal hidden"></div>
 
-
-
-<footer>
-
-💊 Seu tratamento acompanhado com carinho
-
-</footer>
-
-
-</div>
-
-
+<canvas id="canvas"></canvas>
 
 <script src="app.js"></script>
 
-
 </body>
-
 </html>
