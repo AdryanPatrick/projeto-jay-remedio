@@ -27,11 +27,14 @@ messaging.onBackgroundMessage((payload) => {
     payload?.data?.body ||
     "";
 
-  return self.registration.showNotification(title, {
+  self.registration.showNotification(title, {
     body,
     icon: "/projeto-jay-remedio/icone192.png",
     badge: "/projeto-jay-remedio/icone192.png",
     vibrate: [200, 100, 200],
-    requireInteraction: true
+    requireInteraction: true,
+    data: {
+      url: "/projeto-jay-remedio/"
+    }
   });
 });
