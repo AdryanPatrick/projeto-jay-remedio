@@ -23,49 +23,74 @@ appId: "1:637444451377:web:059a3640c800a290e0b910"
 };
 
 
-const app =
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 
-
-const messaging =
-getMessaging(app);
+const messaging = getMessaging(app);
 
 
 
 async function ativarNotificacao(){
 
 
-const permissao =
-await Notification.requestPermission();
+  if(!("Notification" in window)){
+    console.log("Navegador sem suporte");
+    return;
+  }
+
+
+  const permissao =
+  await Notification.requestPermission();
 
 
 
-if(permissao === "granted"){
+  if(permissao === "granted"){
 
 
-const token =
-await getToken(
-messaging,
-{
+    console.log("Permissão liberada ❤️");
 
-vapidKey:
-"BISBY2DVRPxvlbQSLjVvUPFUY1NRJWLL844d2f9HifgOI8J7o3y7QD3PJrNupxbW4jG23i0LRS0ceq_86aVADUw"
+
+
+    const registroSW =
+    await navigator.serviceWorker.register(
+      "firebase-messaging-sw.js"
+    );
+
+
+
+    const token =
+    await getToken(
+      messaging,
+      {
+
+        vapidKey:
+        "BISBY2DVRPxvlbQSLjVvUPFUY1NRJWLL844d2f9HifgOI8J7o3y7QD3PJrNupxbW4jG23i0LRS0ceq_86aVADUw",
+
+
+        serviceWorkerRegistration:
+        registroSW
+
+      }
+    );
+
+
+
+    console.log(
+      "TOKEN DO CELULAR:",
+      token
+    );
+
+
+  }else{
+
+    console.log(
+      "Notificação bloqueada"
+    );
+
+  }
 
 }
-);
 
-
-
-console.log(
-"TOKEN DO CELULAR:",
-token
-);
-
-
-}
-
-}
 
 
 ativarNotificacao();
