@@ -2,7 +2,7 @@ importScripts("https://www.gstatic.com/firebasejs/12.15.0/firebase-app-compat.js
 importScripts("https://www.gstatic.com/firebasejs/12.15.0/firebase-messaging-compat.js");
 
 firebase.initializeApp({
-  apiKey: "AIza...",
+  apiKey: "AIzaSyCe-MBs8Kusu-HCV3MpqiIZjolzHmxKf5s",
   authDomain: "nosso-cuidado.firebaseapp.com",
   projectId: "nosso-cuidado",
   storageBucket: "nosso-cuidado.firebasestorage.app",
@@ -14,18 +14,20 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
 
+  console.log("📩 Push recebido:", payload);
+
   const title =
-    payload.notification?.title ||
-    payload.data?.title ||
-    "Notificação";
+    payload?.notification?.title ||
+    payload?.data?.title ||
+    "Meu Tratamento 💊";
 
   const body =
-    payload.notification?.body ||
-    payload.data?.body ||
+    payload?.notification?.body ||
+    payload?.data?.body ||
     "";
 
   self.registration.showNotification(title, {
-    body: body,
+    body,
     icon: "/projeto-jay-remedio/icone192.png"
   });
 });

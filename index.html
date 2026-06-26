@@ -105,21 +105,19 @@ Criar tratamento
 
 
 <script type="module" src="firebase.js"></script>
-
 <script src="app.js"></script>
 
 <script>
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register(
-      "/projeto-jay-remedio/firebase-messaging-sw.js"
-    )
-    .then((reg) => {
-      console.log("SW registrado com sucesso:", reg.scope);
-    })
-    .catch((err) => {
-      console.log("Erro ao registrar SW:", err);
-    });
+    try {
+      const reg = await navigator.serviceWorker.register(
+        "/projeto-jay-remedio/firebase-messaging-sw.js"
+      );
+      console.log("SW Firebase registrado:", reg.scope);
+    } catch (err) {
+      console.log("Erro SW:", err);
+    }
   }
 });
 </script>
