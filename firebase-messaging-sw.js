@@ -45,7 +45,7 @@ body:
 payload.notification.body,
 
 icon:
-"./icone.png"
+"./projeto-jay-remedio/icone192.png"
 
 }
 
