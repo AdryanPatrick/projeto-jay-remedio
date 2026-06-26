@@ -14,6 +14,8 @@ body{
 .app{
   max-width:500px;
   margin:auto;
+  position:relative;
+  z-index:2;
 }
 
 /* HEADER */
@@ -40,7 +42,7 @@ header p{
   color:#777;
 }
 
-/* ➕ BOTÃO ADICIONAR */
+/* BOTÃO ADD */
 .btn-add{
   margin-top:20px;
   width:100%;
@@ -168,7 +170,7 @@ button{
   font-size:18px;
 }
 
-/* MODAL */
+/* MODAL (FORÇA TOTAL FRENTE) */
 .modal{
   position:fixed;
   inset:0;
@@ -177,15 +179,18 @@ button{
   align-items:center;
   justify-content:center;
   padding:20px;
+  z-index:999999999 !important;
 }
 
 .modal .parabens{
   background:white;
   width:100%;
   max-width:350px;
+  position:relative;
+  z-index:1000000000 !important;
 }
 
-/* 🖼️ MINIATURA BEIJO */
+/* IMAGEM */
 .foto-beijo{
   width:160px;
   height:200px;
@@ -196,21 +201,18 @@ button{
   display:block;
 }
 
-/* TEXTO ROMÂNTICO */
+/* TEXTO */
 .mensagem-amor{
-  font-family:"cursive","Brush Script MT",cursive;
+  font-family:cursive;
   font-size:22px;
   line-height:1.4;
   color:#ff4f91;
   margin-top:20px;
   text-align:center;
-  padding:0 10px;
   white-space:pre-line;
-  word-wrap:break-word;
-  overflow-wrap:break-word;
 }
 
-/* 🟣 BOTÃO CONTINUAR */
+/* BOTÃO CONTINUAR */
 .btn-continuar{
   margin-top:15px;
   width:100%;
@@ -222,122 +224,66 @@ button{
   font-size:16px;
   font-weight:600;
   box-shadow:0 10px 20px #ff4f9166;
-  transition:0.25s ease;
 }
 
-.btn-continuar:hover{
-  transform:translateY(-2px);
-  box-shadow:0 15px 25px #ff4f9188;
-}
-
-.btn-continuar:active{
-  transform:scale(0.98);
-}
-
-/* RESPONSIVO */
-@media (max-width:600px){
-
-  body{
-    padding:10px;
-  }
-
-  header h1{
-    font-size:24px;
-  }
-
-  .foto-casal{
-    width:100px;
-    height:100px;
-  }
-
-  .btn-add{
-    font-size:15px;
-    padding:12px;
-  }
-
-  .form, .card{
-    padding:15px;
-  }
-
-  #lista{
-    gap:10px;
-    padding:10px 0;
-  }
-
-  .card{
-    min-width:95%;
-  }
-
-  .mensagem-amor{
-    font-size:18px;
-  }
-
-  .parabens h2{
-    font-size:18px;
-  }
-
-  .foto-beijo{
-    width:140px;
-    height:180px;
-  }
-}
-
-/* 🎵 BOTÃO DE MÚSICA */
-.btn-musica{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:linear-gradient(135deg,#ff4f91,#ff9fc4);
-  color:white;
-  border:none;
-  padding:12px 14px;
-  border-radius:50px;
-  box-shadow:0 10px 20px #0003;
-  cursor:pointer;
-  font-size:14px;
-  z-index:9999;
-  font-weight:600;
-}
-
-/* 🐈‍⬛ GATINHOS CAINDO */
+/* 🐈 GATINHOS */
 .cat{
   position:fixed;
   top:-120px;
   width:60px;
   height:auto;
   opacity:0.75;
-  z-index:0; /* 👈 fica no fundo */
+  z-index:1;
   pointer-events:none;
-  animation: cair linear forwards;
-  filter: drop-shadow(0 5px 8px #00000030);
+  animation:cair linear forwards;
+  filter:drop-shadow(0 5px 8px #00000030);
 }
 
 @keyframes cair{
   to{
-    transform: translateY(120vh) rotate(20deg);
+    transform:translateY(120vh) rotate(20deg);
   }
 }
 
-.app{
-  position:relative;
-  z-index:2;
-}
-
-body::before{
-  content:"";
+/* 🎵 BOTÃO DE MÚSICA MELHORADO */
+.btn-musica{
   position:fixed;
-  inset:0;
-  background:transparent;
-  z-index:0;
+  bottom:20px;
+  right:20px;
+
+  background:linear-gradient(135deg,#ff4f91,#ff2e7a,#ff9fc4);
+  background-size:200% 200%;
+  animation: brilho 3s ease infinite;
+
+  color:white;
+  border:none;
+
+  padding:14px 20px;
+  border-radius:50px;
+
+  font-size:15px;
+  font-weight:700;
+
+  box-shadow:0 12px 30px #ff4f9166, 0 0 0 3px #ffffff55;
+
+  cursor:pointer;
+
+  z-index:9999;
+
+  transition:0.25s ease;
 }
 
-/* ⭐ GARANTE QUE O MODAL FIQUE NA FRENTE DE TUDO */
-.modal{
-  z-index:999999 !important;
+@keyframes brilho{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
 }
 
-/* ⭐ CONTEÚDO DO MODAL AINDA MAIS GARANTIDO */
-.modal .parabens{
-  z-index:1000000 !important;
-  position:relative;
+.btn-musica:hover{
+  transform:scale(1.08);
+  box-shadow:0 18px 40px #ff4f9188, 0 0 0 4px #ffffff88;
+}
+
+.btn-musica:active{
+  transform:scale(0.96);
 }
