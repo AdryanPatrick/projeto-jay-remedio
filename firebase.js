@@ -42,7 +42,7 @@ async function ativarNotificacao(){
 
     /* ✅ CORREÇÃO IMPORTANTE: SW na raiz */
     const registroSW = await navigator.serviceWorker.register(
-      "/firebase-messaging-sw.js"
+      "/projeto-jay-remedio/firebase-messaging-sw.js"
     );
 
     const token = await getToken(messaging, {
