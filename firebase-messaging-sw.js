@@ -2,7 +2,7 @@ importScripts("https://www.gstatic.com/firebasejs/12.15.0/firebase-app-compat.js
 importScripts("https://www.gstatic.com/firebasejs/12.15.0/firebase-messaging-compat.js");
 
 firebase.initializeApp({
-  apiKey: "AIzaSyCe-MBs8Kusu-HCV3MpqiIZjolzHmxKf5s",
+  apiKey: "AIza...",
   authDomain: "nosso-cuidado.firebaseapp.com",
   projectId: "nosso-cuidado",
   storageBucket: "nosso-cuidado.firebasestorage.app",
@@ -12,24 +12,28 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage((payload) => {
+/* 🔥 ESSENCIAL: pega mensagens automaticamente */
+self.addEventListener("push", function(event) {
 
-  console.log("📩 Push recebido:", payload);
+  console.log("📩 PUSH EVENT:", event);
+
+  if (!event.data) return;
+
+  const payload = event.data.json();
 
   const title =
-    payload?.notification?.title ||
-    payload?.data?.title ||
+    payload.notification?.title ||
+    payload.data?.title ||
     "💊 Meu Tratamento";
 
-  const body =
-    payload?.notification?.body ||
-    payload?.data?.body ||
-    "";
-
-  self.registration.showNotification(title, {
-    body: body,
+  const options = {
+    body: payload.notification?.body || payload.data?.body || "",
     icon: "/projeto-jay-remedio/icone192.png",
     badge: "/projeto-jay-remedio/icone192.png",
     vibrate: [200, 100, 200]
-  });
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(title, options)
+  );
 });
