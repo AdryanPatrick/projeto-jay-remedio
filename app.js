@@ -1,20 +1,59 @@
 let remedios =
 JSON.parse(localStorage.getItem("remedios")) || [];
 
-const lista =
-document.getElementById("lista");
+const lista = document.getElementById("lista");
 
-document.getElementById("adicionar").onclick = adicionar;
+/* =========================
+   INICIALIZAÇÃO SEGURA
+========================= */
+window.addEventListener("DOMContentLoaded", () => {
+
+  console.log("JS carregou");
+
+  const btnAdicionar = document.getElementById("adicionar");
+  const btnMusica = document.getElementById("btnMusica");
+  const musica = document.getElementById("musicaFundo");
+
+  if (btnAdicionar) {
+    btnAdicionar.addEventListener("click", adicionar);
+  }
+
+  /* =========================
+     🎵 MÚSICA (FUNCIONA NO CELULAR)
+  ========================= */
+  let tocando = false;
+
+  if (btnMusica && musica) {
+    btnMusica.addEventListener("click", async () => {
+      try {
+        if (!tocando) {
+          await musica.play();
+          btnMusica.innerText = "⏸️ Pausar";
+          tocando = true;
+        } else {
+          musica.pause();
+          btnMusica.innerText = "🎵 Música";
+          tocando = false;
+        }
+      } catch (e) {
+        console.log("Erro ao tocar música:", e);
+      }
+    });
+  }
+
+  render();
+});
 
 /* =========================
    FORMULÁRIO
 ========================= */
 function abrirFormulario(){
-  document
-  .getElementById("formulario")
-  .classList.toggle("ativo");
+  document.getElementById("formulario").classList.toggle("ativo");
 }
 
+/* =========================
+   SALVAR
+========================= */
 function salvar(){
   localStorage.setItem("remedios", JSON.stringify(remedios));
 }
@@ -75,7 +114,7 @@ function marcar(i, x){
 }
 
 /* =========================
-   FINALIZAR TRATAMENTO
+   FINALIZAR
 ========================= */
 function finalizar(i){
 
@@ -84,12 +123,8 @@ function finalizar(i){
   let terminou = r.doses.every(d => d.feito);
 
   if(terminou && !r.parabens){
-
     r.parabens = true;
-
-    setTimeout(() => {
-      mostrarParabens(r.nome);
-    }, 300);
+    setTimeout(() => mostrarParabens(r.nome), 300);
   }
 }
 
@@ -99,7 +134,6 @@ function finalizar(i){
 function progresso(r){
   let total = r.doses.length;
   let feitos = r.doses.filter(d => d.feito).length;
-
   return Math.round((feitos / total) * 100);
 }
 
@@ -107,6 +141,8 @@ function progresso(r){
    RENDER
 ========================= */
 function render(){
+
+  if(!lista) return;
 
   lista.innerHTML = "";
 
@@ -130,10 +166,8 @@ function render(){
 
       html += `
       <div class="parabens">
-        🎉❤️
-        <br>
-        Tratamento concluído!
-        <br><br>
+        🎉❤️<br>
+        Tratamento concluído!<br><br>
         <b>${r.nome}</b>
       </div>
       `;
@@ -144,14 +178,11 @@ function render(){
 
         html += `
         <label class="dose">
-
-          <input 
-            type="checkbox"
-            ${d.feito ? "checked" : ""}
-            onchange="marcar(${i},${x})">
+          <input type="checkbox"
+          ${d.feito ? "checked" : ""}
+          onchange="marcar(${i},${x})">
 
           Dia ${d.dia} ⏰ ${d.hora}
-
         </label>
         `;
 
@@ -185,7 +216,7 @@ function mostrarParabens(nome){
     <img src="beijo.png" class="foto-beijo">
 
     <p class="mensagem-amor">
-"Eu te amo meu bem e sempre vou cuidar de você, você é meu Lebenslangerschicksalsschatz"
+    "Eu te amo meu bem e sempre vou cuidar de você, você é meu Lebenslangerschicksalsschatz"
     </p>
 
     <button class="btn-continuar"
@@ -198,59 +229,3 @@ function mostrarParabens(nome){
 
   document.body.appendChild(modal);
 }
-
-/* =========================
-   🎵 MÚSICA
-========================= */
-const musica = document.getElementById("musicaFundo");
-const btnMusica = document.getElementById("btnMusica");
-
-let tocando = false;
-
-if(btnMusica && musica){
-
-  btnMusica.addEventListener("click", () => {
-
-    if(!tocando){
-      musica.play();
-      btnMusica.innerText = "⏸️ Pausar";
-      tocando = true;
-    } else {
-      musica.pause();
-      btnMusica.innerText = "🎵 Música";
-      tocando = false;
-    }
-
-  });
-
-}
-
-function criarGato(){
-
-  const cat = document.createElement("img");
-
-  cat.className = "cat";
-
-  // 🐈‍⬛ IMAGEM DE GATO PERSA PRETO
-  cat.src = "klaus.png";
-
-  cat.style.left = Math.random() * window.innerWidth + "px";
-  cat.style.animationDuration = (4 + Math.random() * 4) + "s";
-
-  // tamanho variado (mais realista)
-  let size = 40 + Math.random() * 40;
-  cat.style.width = size + "px";
-
-  document.body.appendChild(cat);
-
-  setTimeout(() => {
-    cat.remove();
-  }, 9000);
-}
-
-setInterval(criarGato, 700);
-
-/* =========================
-   INIT
-========================= */
-render();
