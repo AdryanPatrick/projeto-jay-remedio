@@ -19,7 +19,7 @@ messaging.onBackgroundMessage((payload) => {
   const title =
     payload?.notification?.title ||
     payload?.data?.title ||
-    "Meu Tratamento 💊";
+    "💊 Meu Tratamento";
 
   const body =
     payload?.notification?.body ||
@@ -27,7 +27,9 @@ messaging.onBackgroundMessage((payload) => {
     "";
 
   self.registration.showNotification(title, {
-    body,
-    icon: "/projeto-jay-remedio/icone192.png"
+    body: body,
+    icon: "/projeto-jay-remedio/icone192.png",
+    badge: "/projeto-jay-remedio/icone192.png",
+    vibrate: [200, 100, 200]
   });
 });
