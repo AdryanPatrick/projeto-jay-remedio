@@ -15,13 +15,26 @@ const messaging = firebase.messaging();
 /* 🔥 ÚNICO HANDLER OFICIAL DO FIREBASE */
 messaging.onBackgroundMessage((payload) => {
 
-  console.log("📩 TESTE FINAL:", payload);
+  console.log("📩 FIREBASE BACKGROUND MESSAGE:", payload);
 
-  self.registration.showNotification("🔥 TESTE PUSH", {
-    body: "Se você está vendo isso, está 100% funcionando",
+  const title =
+    payload?.notification?.title ||
+    payload?.data?.title ||
+    "💊 Meu Tratamento";
+
+  const body =
+    payload?.notification?.body ||
+    payload?.data?.body ||
+    "";
+
+  self.registration.showNotification(title, {
+    body,
     icon: "/projeto-jay-remedio/icone192.png",
+    badge: "/projeto-jay-remedio/icone192.png",
+    vibrate: [200, 100, 200],
     requireInteraction: true,
-    vibrate: [200, 100, 200]
+    data: {
+      url: "/projeto-jay-remedio/"
+    }
   });
-
 });
