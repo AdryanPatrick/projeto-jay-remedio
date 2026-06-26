@@ -1,4 +1,4 @@
-alert("JS ESTÁ FUNCIONANDO");
+
 
 let remedios =
 JSON.parse(localStorage.getItem("remedios")) || [];
