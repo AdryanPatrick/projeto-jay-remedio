@@ -12,28 +12,36 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-/* 🔥 ESSENCIAL: pega mensagens automaticamente */
-self.addEventListener("push", function(event) {
+/* 🔥 ÚNICO MÉTODO 100% CONFIÁVEL */
+self.addEventListener("push", (event) => {
 
-  console.log("📩 PUSH EVENT:", event);
+  console.log("📩 PUSH EVENT RECEBIDO:", event);
 
-  if (!event.data) return;
+  let data = {};
 
-  const payload = event.data.json();
+  try {
+    data = event.data.json();
+  } catch (e) {
+    console.log("Erro parse push:", e);
+  }
 
   const title =
-    payload.notification?.title ||
-    payload.data?.title ||
+    data?.notification?.title ||
+    data?.data?.title ||
     "💊 Meu Tratamento";
 
-  const options = {
-    body: payload.notification?.body || payload.data?.body || "",
-    icon: "/projeto-jay-remedio/icone192.png",
-    badge: "/projeto-jay-remedio/icone192.png",
-    vibrate: [200, 100, 200]
-  };
+  const body =
+    data?.notification?.body ||
+    data?.data?.body ||
+    "";
 
   event.waitUntil(
-    self.registration.showNotification(title, options)
+    self.registration.showNotification(title, {
+      body,
+      icon: "/projeto-jay-remedio/icone192.png",
+      badge: "/projeto-jay-remedio/icone192.png",
+      vibrate: [200, 100, 200],
+      requireInteraction: true
+    })
   );
 });
