@@ -1,82 +1,343 @@
-body {
-  margin: 0;
-  font-family: Arial;
-  background: linear-gradient(135deg, #ffd6e8, #fff);
-  text-align: center;
+*{
+  box-sizing:border-box;
+  font-family:"Segoe UI",Arial,sans-serif;
 }
 
-header {
-  padding: 20px;
+body{
+  margin:0;
+  min-height:100vh;
+  background:linear-gradient(135deg,#ffe1ed,#ffffff);
+  padding:20px;
 }
 
-.foto {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  border: 5px solid #ff4f91;
-  object-fit: cover;
+/* APP */
+.app{
+  max-width:500px;
+  margin:auto;
 }
 
-.menu {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 10px;
+/* HEADER */
+header{
+  text-align:center;
 }
 
-.menu button {
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  background: white;
-  font-weight: bold;
-  color: #ff4f91;
+.foto-casal{
+  width:130px;
+  height:130px;
+  object-fit:cover;
+  border-radius:50%;
+  border:6px solid white;
+  box-shadow:0 12px 30px #ff4f9166;
 }
 
-.card {
-  background: white;
-  margin: 10px auto;
-  padding: 15px;
-  width: 90%;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px #0002;
+header h1{
+  color:#ff4f91;
+  font-size:32px;
+  margin-bottom:5px;
 }
 
-button.action {
-  margin-top: 10px;
-  padding: 8px 12px;
-  border: none;
-  background: #ff4f91;
-  color: white;
-  border-radius: 8px;
+header p{
+  color:#777;
+}
+
+/* ➕ BOTÃO ADICIONAR */
+.btn-add{
+  margin-top:20px;
+  width:100%;
+  padding:16px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#ffffff,#fff0f6);
+  border:2px solid #ff4f91;
+  color:#ff4f91;
+  font-size:17px;
+  font-weight:600;
+  box-shadow:0 10px 20px #ff4f9122;
+  transition:0.25s ease;
+}
+
+.btn-add:hover{
+  transform:translateY(-2px);
+  box-shadow:0 15px 25px #ff4f9140;
+}
+
+.btn-add:active{
+  transform:scale(0.98);
+}
+
+/* FORM E CARD */
+.form,
+.card{
+  background:white;
+  padding:22px;
+  border-radius:25px;
+  box-shadow:0 15px 35px #0002;
+}
+
+.form{
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition:.4s;
+  margin-top:0;
+}
+
+.form.ativo{
+  max-height:400px;
+  opacity:1;
+  margin-top:20px;
+}
+
+input{
+  width:100%;
+  padding:15px;
+  margin:8px 0;
+  border-radius:15px;
+  border:1px solid #ddd;
+  font-size:16px;
+}
+
+button{
+  cursor:pointer;
+}
+
+#adicionar{
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:18px;
+  background:#ff4f91;
+  color:white;
+  font-size:17px;
+}
+
+/* LISTA */
+#lista{
+  display:flex;
+  overflow-x:auto;
+  gap:20px;
+  scroll-snap-type:x mandatory;
+  padding:20px 0;
+}
+
+#lista::-webkit-scrollbar{
+  display:none;
+}
+
+.card{
+  min-width:90%;
+  scroll-snap-align:center;
+}
+
+/* PROGRESSO */
+.progress{
+  height:12px;
+  background:#eee;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.bar{
+  height:100%;
+  background:linear-gradient(90deg,#ff4f91,#ff9fc4);
+  transition:.4s;
+}
+
+/* DOSES */
+.dose{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#fff3f8;
+  padding:13px;
+  margin-top:10px;
+  border-radius:15px;
+}
+
+.dose input{
+  width:20px;
+}
+
+/* PARABÉNS */
+.parabens{
+  margin-top:20px;
+  padding:20px;
+  background:#fff0f7;
+  border-radius:20px;
+  text-align:center;
+  color:#ff4f91;
+  font-size:18px;
 }
 
 /* MODAL */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0005;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
-.hidden {
-  display: none;
+.modal .parabens{
+  background:white;
+  width:100%;
+  max-width:350px;
 }
 
-.modal img {
-  width: 220px;
-  border-radius: 20px;
-  margin-top: 10px;
+/* 🖼️ MINIATURA BEIJO */
+.foto-beijo{
+  width:160px;
+  height:200px;
+  object-fit:cover;
+  border-radius:18px;
+  margin:20px auto 0 auto;
+  box-shadow:0 10px 25px #ff4f9166;
+  display:block;
 }
 
-/* CONFETE */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
+/* TEXTO ROMÂNTICO */
+.mensagem-amor{
+  font-family:"cursive","Brush Script MT",cursive;
+  font-size:22px;
+  line-height:1.4;
+  color:#ff4f91;
+  margin-top:20px;
+  text-align:center;
+  padding:0 10px;
+  white-space:pre-line;
+  word-wrap:break-word;
+  overflow-wrap:break-word;
+}
+
+/* 🟣 BOTÃO CONTINUAR */
+.btn-continuar{
+  margin-top:15px;
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:16px;
+  background:linear-gradient(135deg,#ff4f91,#ff9fc4);
+  color:white;
+  font-size:16px;
+  font-weight:600;
+  box-shadow:0 10px 20px #ff4f9166;
+  transition:0.25s ease;
+}
+
+.btn-continuar:hover{
+  transform:translateY(-2px);
+  box-shadow:0 15px 25px #ff4f9188;
+}
+
+.btn-continuar:active{
+  transform:scale(0.98);
+}
+
+/* RESPONSIVO */
+@media (max-width:600px){
+
+  body{
+    padding:10px;
+  }
+
+  header h1{
+    font-size:24px;
+  }
+
+  .foto-casal{
+    width:100px;
+    height:100px;
+  }
+
+  .btn-add{
+    font-size:15px;
+    padding:12px;
+  }
+
+  .form, .card{
+    padding:15px;
+  }
+
+  #lista{
+    gap:10px;
+    padding:10px 0;
+  }
+
+  .card{
+    min-width:95%;
+  }
+
+  .mensagem-amor{
+    font-size:18px;
+  }
+
+  .parabens h2{
+    font-size:18px;
+  }
+
+  .foto-beijo{
+    width:140px;
+    height:180px;
+  }
+}
+
+/* 🎵 BOTÃO DE MÚSICA */
+.btn-musica{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:linear-gradient(135deg,#ff4f91,#ff9fc4);
+  color:white;
+  border:none;
+  padding:12px 14px;
+  border-radius:50px;
+  box-shadow:0 10px 20px #0003;
+  cursor:pointer;
+  font-size:14px;
+  z-index:9999;
+  font-weight:600;
+}
+
+/* 🐈‍⬛ GATINHOS CAINDO */
+.cat{
+  position:fixed;
+  top:-120px;
+  width:60px;
+  height:auto;
+  opacity:0.75;
+  z-index:0; /* 👈 fica no fundo */
+  pointer-events:none;
+  animation: cair linear forwards;
+  filter: drop-shadow(0 5px 8px #00000030);
+}
+
+@keyframes cair{
+  to{
+    transform: translateY(120vh) rotate(20deg);
+  }
+}
+
+.app{
+  position:relative;
+  z-index:2;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:transparent;
+  z-index:0;
+}
+
+/* ⭐ GARANTE QUE O MODAL FIQUE NA FRENTE DE TUDO */
+.modal{
+  z-index:999999 !important;
+}
+
+/* ⭐ CONTEÚDO DO MODAL AINDA MAIS GARANTIDO */
+.modal .parabens{
+  z-index:1000000 !important;
+  position:relative;
 }
