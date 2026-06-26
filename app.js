@@ -16,29 +16,59 @@ window.addEventListener("DOMContentLoaded", () => {
     btnAdicionar.addEventListener("click", adicionar);
   }
 
-  /* =========================
-     🎵 MÚSICA
-  ========================= */
-  let tocando = false;
+ /* =========================
+   🎵 MÚSICA (MELHORADA PARA CELULAR)
+========================= */
 
-  if (btnMusica && musica) {
-    btnMusica.addEventListener("click", async () => {
-      try {
-        if (!tocando) {
-          await musica.play();
-          btnMusica.innerText = "⏸️ Pausar";
-          tocando = true;
-        } else {
-          musica.pause();
-          btnMusica.innerText = "🎵 Música";
-          tocando = false;
-        }
-      } catch (e) {
-        console.log("Erro música:", e);
+const musica = document.getElementById("musicaFundo");
+const btnMusica = document.getElementById("btnMusica");
+
+let tocando = false;
+
+// configuração inicial (evita cortes rápidos)
+if (musica) {
+  musica.loop = true;
+  musica.volume = 0.7;
+  musica.preload = "auto";
+}
+
+// botão de controle
+if (btnMusica && musica) {
+
+  btnMusica.addEventListener("click", async () => {
+    try {
+
+      if (!tocando) {
+        await musica.play();
+        tocando = true;
+        btnMusica.innerText = "⏸️ Pausar";
+      } else {
+        musica.pause();
+        tocando = false;
+        btnMusica.innerText = "🎵 Música";
       }
-    });
-  }
 
+    } catch (err) {
+      console.log("Erro ao tocar música:", err);
+    }
+  });
+}
+
+// 🔥 tenta retomar quando volta pro app
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible" && tocando) {
+    musica.play().catch(() => {});
+  }
+});
+
+// 🔥 tenta recuperar se o celular pausar sozinho
+musica.addEventListener("pause", () => {
+  if (tocando) {
+    setTimeout(() => {
+      musica.play().catch(() => {});
+    }, 1000);
+  }
+});
   render();
 });
 
