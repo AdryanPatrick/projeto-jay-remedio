@@ -1,16 +1,11 @@
-self.addEventListener(
-"install",
-()=>{
+self.addEventListener("install", (event) => {
+  console.log("Service Worker instalado");
+  self.skipWaiting();
+});
 
-console.log("Aplicativo instalado");
+self.addEventListener("activate", (event) => {
+  console.log("Service Worker ativo");
+  return self.clients.claim();
+});
 
-}
-);
-
-
-
-self.addEventListener(
-"fetch",
-()=>{}
-
-);
+self.addEventListener("fetch", () => {});

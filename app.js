@@ -1,5 +1,3 @@
-
-
 let remedios =
 JSON.parse(localStorage.getItem("remedios")) || [];
 
@@ -10,8 +8,6 @@ const lista = document.getElementById("lista");
 ========================= */
 window.addEventListener("DOMContentLoaded", () => {
 
-  console.log("JS carregou");
-
   const btnAdicionar = document.getElementById("adicionar");
   const btnMusica = document.getElementById("btnMusica");
   const musica = document.getElementById("musicaFundo");
@@ -21,7 +17,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     🎵 MÚSICA (FUNCIONA NO CELULAR)
+     🎵 MÚSICA
   ========================= */
   let tocando = false;
 
@@ -38,7 +34,7 @@ window.addEventListener("DOMContentLoaded", () => {
           tocando = false;
         }
       } catch (e) {
-        console.log("Erro ao tocar música:", e);
+        console.log("Erro música:", e);
       }
     });
   }
@@ -47,7 +43,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 /* =========================
-   FORMULÁRIO
+   FORM
 ========================= */
 function abrirFormulario(){
   document.getElementById("formulario").classList.toggle("ativo");
@@ -61,7 +57,7 @@ function salvar(){
 }
 
 /* =========================
-   ADICIONAR REMÉDIO
+   ADICIONAR
 ========================= */
 function adicionar(){
 
@@ -69,9 +65,8 @@ function adicionar(){
   let dias = Number(document.getElementById("dias").value);
 
   let horarios = document.getElementById("horarios")
-  .value
-  .split(",")
-  .map(x => x.trim())
+  .value.split(",")
+  .map(x=>x.trim())
   .filter(Boolean);
 
   if(!nome || !dias || !horarios.length){
@@ -81,12 +76,12 @@ function adicionar(){
 
   let doses = [];
 
-  for(let d = 1; d <= dias; d++){
-    horarios.forEach(h => {
+  for(let d=1; d<=dias; d++){
+    horarios.forEach(h=>{
       doses.push({
-        dia: d,
-        hora: h,
-        feito: false
+        dia:d,
+        hora:h,
+        feito:false
       });
     });
   }
@@ -95,7 +90,7 @@ function adicionar(){
     nome,
     dias,
     doses,
-    parabens: false
+    parabens:false
   });
 
   salvar();
@@ -103,9 +98,9 @@ function adicionar(){
 }
 
 /* =========================
-   MARCAR DOSE
+   MARCAR
 ========================= */
-function marcar(i, x){
+function marcar(i,x){
 
   remedios[i].doses[x].feito =
   !remedios[i].doses[x].feito;
@@ -122,11 +117,9 @@ function finalizar(i){
 
   let r = remedios[i];
 
-  let terminou = r.doses.every(d => d.feito);
-
-  if(terminou && !r.parabens){
+  if(r.doses.every(d=>d.feito) && !r.parabens){
     r.parabens = true;
-    setTimeout(() => mostrarParabens(r.nome), 300);
+    setTimeout(()=>mostrarParabens(r.nome),300);
   }
 }
 
@@ -135,8 +128,8 @@ function finalizar(i){
 ========================= */
 function progresso(r){
   let total = r.doses.length;
-  let feitos = r.doses.filter(d => d.feito).length;
-  return Math.round((feitos / total) * 100);
+  let feitos = r.doses.filter(d=>d.feito).length;
+  return Math.round((feitos/total)*100);
 }
 
 /* =========================
@@ -144,11 +137,9 @@ function progresso(r){
 ========================= */
 function render(){
 
-  if(!lista) return;
-
   lista.innerHTML = "";
 
-  remedios.forEach((r, i) => {
+  remedios.forEach((r,i)=>{
 
     let pct = progresso(r);
 
@@ -164,9 +155,9 @@ function render(){
       <h3>${pct}%</h3>
     `;
 
-    if(pct == 100){
+    if(pct==100){
 
-      html += `
+      html+=`
       <div class="parabens">
         🎉❤️<br>
         Tratamento concluído!<br><br>
@@ -176,23 +167,21 @@ function render(){
 
     } else {
 
-      r.doses.forEach((d, x) => {
-
-        html += `
+      r.doses.forEach((d,x)=>{
+        html+=`
         <label class="dose">
           <input type="checkbox"
-          ${d.feito ? "checked" : ""}
+          ${d.feito?"checked":""}
           onchange="marcar(${i},${x})">
 
           Dia ${d.dia} ⏰ ${d.hora}
         </label>
         `;
-
       });
 
     }
 
-    html += `</div>`;
+    html+=`</div>`;
     lista.innerHTML += html;
 
   });
@@ -212,8 +201,7 @@ function mostrarParabens(nome){
     <h1>🎉❤️</h1>
     <h2>Parabéns!</h2>
 
-    <p>Você terminou:</p>
-    <b>${nome}</b>
+    <p>${nome}</p>
 
     <img src="beijo.png" class="foto-beijo">
 
@@ -230,4 +218,35 @@ function mostrarParabens(nome){
   `;
 
   document.body.appendChild(modal);
+}
+
+/* =========================
+   🐈‍⬛ GATINHOS
+========================= */
+function criarGato(){
+
+  const cat = document.createElement("img");
+
+  cat.className = "cat";
+
+  cat.src = "klaus.png";
+
+  cat.style.left = Math.random() * window.innerWidth + "px";
+  cat.style.width = (40 + Math.random() * 50) + "px";
+  cat.style.animationDuration = (4 + Math.random() * 4) + "s";
+  cat.style.opacity = "0.8";
+
+  document.body.appendChild(cat);
+
+  setTimeout(()=>{
+    cat.remove();
+  },9000);
+}
+
+setInterval(criarGato,700);
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js")
+    .then(() => console.log("SW registrado"))
+    .catch(err => console.log("Erro SW:", err));
 }

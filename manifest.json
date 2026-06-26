@@ -3,14 +3,12 @@
   "short_name": "Remédio",
   "description": "Lembrete de medicamentos e acompanhamento do tratamento",
   "lang": "pt-BR",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-
   "background_color": "#ffeaf2",
   "theme_color": "#ff5c9a",
-
   "icons": [
     {
       "src": "icon-192.png",
