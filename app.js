@@ -1,10 +1,13 @@
-let remedios =
-JSON.parse(localStorage.getItem("remedios")) || [];
-
+let remedios = JSON.parse(localStorage.getItem("remedios")) || [];
 const lista = document.getElementById("lista");
 
 /* =========================
-   INICIALIZAÇÃO SEGURA
+   🔥 RELOGIOS INTELIGENTES
+========================= */
+let alarmesAtivos = {};
+
+/* =========================
+   INIT
 ========================= */
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -16,30 +19,26 @@ window.addEventListener("DOMContentLoaded", () => {
     btnAdicionar.addEventListener("click", adicionar);
   }
 
-  /* =========================
-     🎵 MÚSICA
-  ========================= */
   let tocando = false;
 
   if (btnMusica && musica) {
     btnMusica.addEventListener("click", async () => {
-      try {
-        if (!tocando) {
-          await musica.play();
-          btnMusica.innerText = "⏸️ Pausar";
-          tocando = true;
-        } else {
-          musica.pause();
-          btnMusica.innerText = "🎵 Música";
-          tocando = false;
-        }
-      } catch (e) {
-        console.log("Erro música:", e);
+      if (!tocando) {
+        await musica.play();
+        btnMusica.innerText = "⏸️ Pausar";
+        tocando = true;
+      } else {
+        musica.pause();
+        btnMusica.innerText = "🎵 Música";
+        tocando = false;
       }
     });
   }
 
   render();
+
+  // 🔥 reativa alarmes salvos
+  remedios.forEach(r => iniciarRepeticaoInteligente(r));
 });
 
 /* =========================
@@ -57,7 +56,7 @@ function salvar(){
 }
 
 /* =========================
-   ADICIONAR
+   ADICIONAR (COM SMART)
 ========================= */
 function adicionar(){
 
@@ -66,7 +65,7 @@ function adicionar(){
 
   let horarios = document.getElementById("horarios")
   .value.split(",")
-  .map(x=>x.trim())
+  .map(x => x.trim())
   .filter(Boolean);
 
   if(!nome || !dias || !horarios.length){
@@ -86,55 +85,95 @@ function adicionar(){
     });
   }
 
-  remedios.push({
+  const remedio = {
     nome,
     dias,
+    horarios,
     doses,
     parabens:false
+  };
+
+  remedios.push(remedio);
+
+  salvar();
+  render();
+
+  iniciarRepeticaoInteligente(remedio);
+}
+
+/* =========================
+   🔥 REPETIÇÃO INTELIGENTE
+========================= */
+function iniciarRepeticaoInteligente(remedio){
+
+  remedio.horarios.forEach(hora => {
+    agendarHora(remedio.nome, hora);
   });
 
-  salvar();
-  render();
 }
 
 /* =========================
-   MARCAR
+   ⏰ AGENDADOR
 ========================= */
-function marcar(i,x){
+function agendarHora(nome, horaStr){
 
-  remedios[i].doses[x].feito =
-  !remedios[i].doses[x].feito;
+  const [h, m] = horaStr.split(":");
 
-  finalizar(i);
-  salvar();
-  render();
-}
+  const agora = new Date();
+  const proximo = new Date();
 
-/* =========================
-   FINALIZAR
-========================= */
-function finalizar(i){
+  proximo.setHours(h, m, 0, 0);
 
-  let r = remedios[i];
-
-  if(r.doses.every(d=>d.feito) && !r.parabens){
-    r.parabens = true;
-    setTimeout(()=>mostrarParabens(r.nome),300);
+  if(proximo < agora){
+    proximo.setDate(proximo.getDate() + 1);
   }
+
+  const delay = proximo - agora;
+
+  const id = nome + "_" + horaStr;
+
+  if(alarmesAtivos[id]){
+    clearTimeout(alarmesAtivos[id]);
+  }
+
+  alarmesAtivos[id] = setTimeout(() => {
+
+    mostrarNotificacao(nome);
+
+    agendarHora(nome, horaStr);
+
+  }, delay);
 }
 
 /* =========================
-   PROGRESSO
+   🔔 NOTIFICAÇÃO
 ========================= */
+function mostrarNotificacao(nome){
+
+  if(Notification.permission !== "granted") return;
+
+  new Notification("💊 Hora do remédio!", {
+    body: `Está na hora de tomar: ${nome}`,
+    icon: "/projeto-jay-remedio/icone192.png"
+  });
+}
+
+/* =========================
+   RESTANTE DO SEU CÓDIGO (SEM MEXER NO ESTILO)
+========================= */
+
+function marcar(i,x){
+  remedios[i].doses[x].feito = !remedios[i].doses[x].feito;
+  salvar();
+  render();
+}
+
 function progresso(r){
   let total = r.doses.length;
   let feitos = r.doses.filter(d=>d.feito).length;
   return Math.round((feitos/total)*100);
 }
 
-/* =========================
-   RENDER
-========================= */
 function render(){
 
   lista.innerHTML = "";
@@ -155,98 +194,19 @@ function render(){
       <h3>${pct}%</h3>
     `;
 
-    if(pct==100){
+    r.doses.forEach((d,x)=>{
+      html += `
+      <label class="dose">
+        <input type="checkbox"
+        ${d.feito?"checked":""}
+        onchange="marcar(${i},${x})">
 
-      html+=`
-      <div class="parabens">
-        🎉❤️<br>
-        Tratamento concluído!<br><br>
-        <b>${r.nome}</b>
-      </div>
+        Dia ${d.dia} ⏰ ${d.hora}
+      </label>
       `;
+    });
 
-    } else {
-
-      r.doses.forEach((d,x)=>{
-        html+=`
-        <label class="dose">
-          <input type="checkbox"
-          ${d.feito?"checked":""}
-          onchange="marcar(${i},${x})">
-
-          Dia ${d.dia} ⏰ ${d.hora}
-        </label>
-        `;
-      });
-
-    }
-
-    html+=`</div>`;
+    html += `</div>`;
     lista.innerHTML += html;
-
   });
-}
-
-/* =========================
-   MODAL PARABÉNS
-========================= */
-function mostrarParabens(nome){
-
-  let modal = document.createElement("div");
-  modal.className = "modal";
-
-  modal.innerHTML = `
-  <div class="parabens">
-
-    <h1>🎉❤️</h1>
-    <h2>Parabéns!</h2>
-
-    <p>${nome}</p>
-
-    <img src="beijo.png" class="foto-beijo">
-
-    <p class="mensagem-amor">
-    "Eu te amo meu bem e sempre vou cuidar de você, você é meu Lebenslangerschicksalsschatz"
-    </p>
-
-    <button class="btn-continuar"
-    onclick="this.parentElement.parentElement.remove()">
-      Continuar ❤️
-    </button>
-
-  </div>
-  `;
-
-  document.body.appendChild(modal);
-}
-
-/* =========================
-   🐈‍⬛ GATINHOS
-========================= */
-function criarGato(){
-
-  const cat = document.createElement("img");
-
-  cat.className = "cat";
-
-  cat.src = "klaus.png";
-
-  cat.style.left = Math.random() * window.innerWidth + "px";
-  cat.style.width = (40 + Math.random() * 50) + "px";
-  cat.style.animationDuration = (4 + Math.random() * 4) + "s";
-  cat.style.opacity = "0.8";
-
-  document.body.appendChild(cat);
-
-  setTimeout(()=>{
-    cat.remove();
-  },9000);
-}
-
-setInterval(criarGato,700);
-
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js")
-    .then(() => console.log("SW registrado"))
-    .catch(err => console.log("Erro SW:", err));
 }

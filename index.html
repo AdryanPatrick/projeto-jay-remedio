@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,98 +10,41 @@
 <link rel="stylesheet" href="style.css">
 
 <link rel="icon" type="image/png" href="/projeto-jay-remedio/icone192.png">
-
 <link rel="apple-touch-icon" href="/projeto-jay-remedio/icone192.png">
 
 <meta name="theme-color" content="#ff5c9a">
-
 <link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#ff5c9a">
-
 </head>
-
 
 <body>
 
-
 <div class="app">
 
-
 <header>
-
-<img 
-src="fotoprincipal.jpeg"
-class="foto-casal"
->
-
-
+<img src="fotoprincipal.jpeg" class="foto-casal">
 <h1>💊 Meu Tratamento</h1>
-
 <p>Seu cuidado diário meu bem! ❤️</p>
-
-
 </header>
 
-
-
-
-
-<button 
-class="btn-add"
-onclick="abrirFormulario()">
-
+<button class="btn-add" onclick="abrirFormulario()">
 ➕ Adicionar remédio
-
 </button>
 
+<section class="form" id="formulario">
 
+<input id="nome" placeholder="Nome do remédio">
 
+<input id="dias" type="number" placeholder="Dias de tratamento">
 
+<input id="horarios" placeholder="Horários (08:00,20:00)">
 
-<section 
-class="form"
-id="formulario">
-
-
-
-<input 
-id="nome"
-placeholder="Nome do remédio">
-
-
-
-<input 
-id="dias"
-type="number"
-placeholder="Dias de tratamento">
-
-
-
-<input 
-id="horarios"
-placeholder="Horários (08:00,20:00)">
-
-
-
-<button id="adicionar">
-
-Criar tratamento
-
-</button>
-
-
+<button id="adicionar">Criar tratamento</button>
 
 </section>
 
-
-
-
-
 <div id="lista"></div>
 
-
 </div>
-
 
 <script type="module" src="firebase.js"></script>
 <script src="app.js"></script>
@@ -110,28 +52,14 @@ Criar tratamento
 <script>
 window.addEventListener("load", async () => {
   if ("serviceWorker" in navigator) {
-    try {
-      const reg = await navigator.serviceWorker.register(
-        "/projeto-jay-remedio/firebase-messaging-sw.js"
-      );
-      console.log("SW Firebase registrado:", reg.scope);
-    } catch (err) {
-      console.log("Erro SW:", err);
-    }
+    await navigator.serviceWorker.register(
+      "/projeto-jay-remedio/firebase-messaging-sw.js"
+    );
   }
+
+  Notification.requestPermission();
 });
 </script>
 
-
-<!-- 🎵 ÁUDIO -->
-<audio id="musicaFundo" loop>
-  <source src="musica.mp3" type="audio/mpeg">
-</audio>
-
-<button id="btnMusica" class="btn-musica">
-🎵 Música
-</button>
-
 </body>
-
 </html>
