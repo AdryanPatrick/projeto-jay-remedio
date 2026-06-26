@@ -21,47 +21,23 @@ window.addEventListener("DOMContentLoaded", () => {
   ========================= */
   let tocando = false;
 
-window.addEventListener("DOMContentLoaded", () => {
-
-  const musica = document.getElementById("musicaFundo");
-  const btnMusica = document.getElementById("btnMusica");
-
-  if (!musica || !btnMusica) return;
-
-  musica.loop = true;
-  musica.volume = 0.8;
-  musica.preload = "auto";
-
-  // 🔥 MUITO IMPORTANTE: interação direta e simples
-  btnMusica.addEventListener("click", function () {
-
-    if (musica.paused) {
-
-      const playPromise = musica.play();
-
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            tocando = true;
-            btnMusica.innerText = "⏸️ Pausar";
-          })
-          .catch(err => {
-            console.log("Bloqueado no Android:", err);
-            alert("Toque novamente para liberar o áudio 🎵");
-          });
+  if (btnMusica && musica) {
+    btnMusica.addEventListener("click", async () => {
+      try {
+        if (!tocando) {
+          await musica.play();
+          btnMusica.innerText = "⏸️ Pausar";
+          tocando = true;
+        } else {
+          musica.pause();
+          btnMusica.innerText = "🎵 Música";
+          tocando = false;
+        }
+      } catch (e) {
+        console.log("Erro música:", e);
       }
-
-    } else {
-
-      musica.pause();
-      tocando = false;
-      btnMusica.innerText = "🎵 Música";
-
-    }
-
-  });
-
-});
+    });
+  }
 
   render();
 });
