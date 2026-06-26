@@ -53,7 +53,7 @@ async function ativarNotificacao(){
 
     const registroSW =
     await navigator.serviceWorker.register(
-      "firebase-messaging-sw.js"
+      "./firebase-messaging-sw.js"
     );
 
 
