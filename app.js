@@ -163,9 +163,22 @@ function mostrarNotificacao(nome){
 ========================= */
 
 function marcar(i,x){
-  remedios[i].doses[x].feito = !remedios[i].doses[x].feito;
-  salvar();
-  render();
+
+remedios[i].doses[x].feito =
+!remedios[i].doses[x].feito;
+
+
+if(
+remedios[i].doses.every(d=>d.feito)
+){
+
+mostrarParabens(remedios[i].nome);
+
+}
+
+
+render();
+
 }
 
 function progresso(r){
@@ -247,3 +260,52 @@ function criarGato(){
 
 
 setInterval(criarGato,700);
+
+/* =========================
+   🎉 PARABÉNS
+========================= */
+
+function mostrarParabens(nome){
+
+let modal = document.createElement("div");
+
+modal.className="modal";
+
+
+modal.innerHTML=`
+
+<div class="parabens">
+
+<h1>🎉❤️</h1>
+
+<h2>Parabéns!</h2>
+
+<p>${nome}</p>
+
+
+<img src="beijo.png" class="foto-beijo">
+
+
+<p class="mensagem-amor">
+
+"Eu te amo meu bem e sempre vou cuidar de você, você é meu Lebenslangerschicksalsschatz"
+
+</p>
+
+
+<button class="btn-continuar"
+onclick="this.parentElement.parentElement.remove()">
+
+Continuar ❤️
+
+</button>
+
+
+</div>
+
+`;
+
+
+document.body.appendChild(modal);
+
+}

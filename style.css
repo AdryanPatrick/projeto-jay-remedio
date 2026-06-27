@@ -10,7 +10,6 @@ body{
   padding:20px;
 }
 
-/* APP */
 .app{
   max-width:500px;
   margin:auto;
@@ -18,7 +17,7 @@ body{
   z-index:2;
 }
 
-/* HEADER */
+
 header{
   text-align:center;
 }
@@ -42,7 +41,7 @@ header p{
   color:#777;
 }
 
-/* BOTÃO ADD */
+
 .btn-add{
   margin-top:20px;
   width:100%;
@@ -53,20 +52,9 @@ header p{
   color:#ff4f91;
   font-size:17px;
   font-weight:600;
-  box-shadow:0 10px 20px #ff4f9122;
-  transition:0.25s ease;
 }
 
-.btn-add:hover{
-  transform:translateY(-2px);
-  box-shadow:0 15px 25px #ff4f9140;
-}
 
-.btn-add:active{
-  transform:scale(0.98);
-}
-
-/* FORM E CARD */
 .form,
 .card{
   background:white;
@@ -75,19 +63,21 @@ header p{
   box-shadow:0 15px 35px #0002;
 }
 
+
 .form{
   max-height:0;
   overflow:hidden;
   opacity:0;
   transition:.4s;
-  margin-top:0;
 }
+
 
 .form.ativo{
   max-height:400px;
   opacity:1;
   margin-top:20px;
 }
+
 
 input{
   width:100%;
@@ -98,9 +88,6 @@ input{
   font-size:16px;
 }
 
-button{
-  cursor:pointer;
-}
 
 #adicionar{
   width:100%;
@@ -109,10 +96,9 @@ button{
   border-radius:18px;
   background:#ff4f91;
   color:white;
-  font-size:17px;
 }
 
-/* LISTA */
+
 #lista{
   display:flex;
   overflow-x:auto;
@@ -121,169 +107,289 @@ button{
   padding:20px 0;
 }
 
+
 #lista::-webkit-scrollbar{
-  display:none;
+ display:none;
 }
+
 
 .card{
-  min-width:90%;
-  scroll-snap-align:center;
+ min-width:90%;
+ scroll-snap-align:center;
 }
 
-/* PROGRESSO */
+
 .progress{
-  height:12px;
-  background:#eee;
-  border-radius:20px;
-  overflow:hidden;
+ height:12px;
+ background:#eee;
+ border-radius:20px;
+ overflow:hidden;
 }
+
 
 .bar{
-  height:100%;
-  background:linear-gradient(90deg,#ff4f91,#ff9fc4);
-  transition:.4s;
+ height:100%;
+ background:linear-gradient(90deg,#ff4f91,#ff9fc4);
 }
 
-/* DOSES */
+
 .dose{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  background:#fff3f8;
-  padding:13px;
-  margin-top:10px;
-  border-radius:15px;
+ display:flex;
+ align-items:center;
+ gap:10px;
+ background:#fff3f8;
+ padding:13px;
+ margin-top:10px;
+ border-radius:15px;
 }
 
-.dose input{
-  width:20px;
-}
 
-/* PARABÉNS */
+/* =========================
+   🎉 PARABÉNS RESPONSIVO
+========================= */
+
 .parabens{
   margin-top:20px;
-  padding:20px;
+  padding:18px;
+
   background:#fff0f7;
+
   border-radius:20px;
+
   text-align:center;
+
   color:#ff4f91;
-  font-size:18px;
-}
 
-/* MODAL (FORÇA TOTAL FRENTE) */
-.modal{
-  position:fixed;
-  inset:0;
-  background:#0005;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:999999999 !important;
-}
+  font-size:clamp(14px,4vw,18px);
 
-.modal .parabens{
-  background:white;
   width:100%;
   max-width:350px;
-  position:relative;
-  z-index:1000000000 !important;
+
+  margin-left:auto;
+  margin-right:auto;
 }
 
-/* IMAGEM */
-.foto-beijo{
-  width:160px;
-  height:200px;
-  object-fit:cover;
-  border-radius:18px;
-  margin:20px auto 0 auto;
-  box-shadow:0 10px 25px #ff4f9166;
-  display:block;
+
+.parabens h1{
+
+ font-size:clamp(28px,10vw,45px);
+
+ margin:5px;
+
 }
+
+
+.parabens h2{
+
+ font-size:clamp(20px,7vw,30px);
+
+ margin:8px;
+
+}
+
+
+
+/* MODAL */
+
+.modal{
+
+ position:fixed;
+
+ inset:0;
+
+ background:#0005;
+
+ display:flex;
+
+ align-items:center;
+
+ justify-content:center;
+
+ padding:20px;
+
+ z-index:999999999 !important;
+
+}
+
+
+.modal .parabens{
+
+ background:white;
+
+ width:100%;
+
+ max-width:350px;
+
+}
+
+
+/* FOTO BEIJO */
+
+.foto-beijo{
+
+ width:clamp(110px,45vw,160px);
+
+ height:clamp(140px,55vw,200px);
+
+ object-fit:cover;
+
+ border-radius:18px;
+
+ margin:15px auto;
+
+ box-shadow:0 10px 25px #ff4f9166;
+
+ display:block;
+
+}
+
+
 
 /* TEXTO */
+
 .mensagem-amor{
-  font-family:cursive;
-  font-size:22px;
-  line-height:1.4;
-  color:#ff4f91;
-  margin-top:20px;
-  text-align:center;
-  white-space:pre-line;
+
+ font-family:cursive;
+
+ font-size:clamp(15px,4.5vw,22px);
+
+ line-height:1.35;
+
+ color:#ff4f91;
+
+ margin-top:15px;
+
+ text-align:center;
+
+ white-space:pre-line;
+
 }
 
-/* BOTÃO CONTINUAR */
+
+/* BOTÃO */
+
 .btn-continuar{
-  margin-top:15px;
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:16px;
-  background:linear-gradient(135deg,#ff4f91,#ff9fc4);
-  color:white;
-  font-size:16px;
-  font-weight:600;
-  box-shadow:0 10px 20px #ff4f9166;
+
+ margin-top:15px;
+
+ width:100%;
+
+ max-width:260px;
+
+ padding:12px;
+
+ border:0;
+
+ border-radius:16px;
+
+ background:linear-gradient(
+ 135deg,
+ #ff4f91,
+ #ff9fc4
+ );
+
+ color:white;
+
+ font-size:15px;
+
+ font-weight:600;
+
 }
 
-/* 🐈 GATINHOS */
+
+
+/* 🐈 GATOS */
+
 .cat{
-  position:fixed;
-  top:-120px;
-  width:60px;
-  height:auto;
-  opacity:0.75;
-  z-index:1;
-  pointer-events:none;
-  animation:cair linear forwards;
-  filter:drop-shadow(0 5px 8px #00000030);
+
+ position:fixed;
+
+ top:-120px;
+
+ width:60px;
+
+ height:auto;
+
+ opacity:0.75;
+
+ z-index:1;
+
+ pointer-events:none;
+
+ animation:cair linear forwards;
+
 }
+
 
 @keyframes cair{
-  to{
-    transform:translateY(120vh) rotate(20deg);
-  }
+
+to{
+
+ transform:translateY(120vh) rotate(20deg);
+
 }
 
-/* 🎵 BOTÃO DE MÚSICA MELHORADO */
+}
+
+
+
+/* 🎵 MUSICA */
+
 .btn-musica{
-  position:fixed;
-  bottom:20px;
-  right:20px;
 
-  background:linear-gradient(135deg,#ff4f91,#ff2e7a,#ff9fc4);
-  background-size:200% 200%;
-  animation: brilho 3s ease infinite;
+ position:fixed;
 
-  color:white;
-  border:none;
+ bottom:20px;
 
-  padding:14px 20px;
-  border-radius:50px;
+ right:20px;
 
-  font-size:15px;
-  font-weight:700;
+ background:linear-gradient(
+ 135deg,
+ #ff4f91,
+ #ff2e7a,
+ #ff9fc4
+ );
 
-  box-shadow:0 12px 30px #ff4f9166, 0 0 0 3px #ffffff55;
+ color:white;
 
-  cursor:pointer;
+ border:none;
 
-  z-index:9999;
+ padding:14px 20px;
 
-  transition:0.25s ease;
+ border-radius:50px;
+
+ font-size:15px;
+
+ font-weight:700;
+
+ z-index:9999;
+
+ box-shadow:0 12px 30px #ff4f9166;
+
 }
 
-@keyframes brilho{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
-}
 
-.btn-musica:hover{
-  transform:scale(1.08);
-  box-shadow:0 18px 40px #ff4f9188, 0 0 0 4px #ffffff88;
-}
+@media(max-width:380px){
 
-.btn-musica:active{
-  transform:scale(0.96);
+ body{
+   padding:10px;
+ }
+
+
+ .foto-casal{
+   width:100px;
+   height:100px;
+ }
+
+
+ .btn-musica{
+
+ bottom:15px;
+ right:15px;
+
+ padding:12px 16px;
+
+ }
+
+
 }
