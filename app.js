@@ -210,3 +210,40 @@ function render(){
     lista.innerHTML += html;
   });
 }
+
+/* =========================
+   🐈‍⬛ GATINHOS VOLTANDO
+========================= */
+
+function criarGato(){
+
+  const cat = document.createElement("img");
+
+  cat.className = "cat";
+
+  cat.src = "klaus.png";
+
+  cat.style.left =
+  Math.random() * window.innerWidth + "px";
+
+  cat.style.width =
+  (40 + Math.random() * 50) + "px";
+
+  cat.style.animationDuration =
+  (4 + Math.random() * 4) + "s";
+
+  cat.style.opacity = "0.8";
+
+  document.body.appendChild(cat);
+
+
+  setTimeout(()=>{
+
+    cat.remove();
+
+  },9000);
+
+}
+
+
+setInterval(criarGato,700);
