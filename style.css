@@ -133,14 +133,51 @@ input{
 }
 
 
+/* =========================
+   💊 DOSES
+========================= */
+
 .dose{
+
  display:flex;
+
  align-items:center;
+
+ justify-content:space-between;
+
  gap:10px;
+
  background:#fff3f8;
- padding:13px;
+
+ padding:13px 16px;
+
  margin-top:10px;
+
  border-radius:15px;
+
+ font-weight:600;
+
+ color:#555;
+
+}
+
+
+/* checkbox no canto direito */
+
+.dose input{
+
+ width:22px;
+
+ height:22px;
+
+ margin:0;
+
+ order:2;
+
+ accent-color:#ff4f91;
+
+ cursor:pointer;
+
 }
 
 

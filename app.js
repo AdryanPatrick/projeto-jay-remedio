@@ -164,20 +164,70 @@ function mostrarNotificacao(nome){
 
 function marcar(i,x){
 
-remedios[i].doses[x].feito =
-!remedios[i].doses[x].feito;
+
+let dose = remedios[i].doses[x];
+
+
+// se está marcando como tomado
+if(!dose.feito){
+
+
+  // verifica se é a última dose
+  let ultimaDose =
+  remedios[i].doses.every((d,index)=>{
+
+    if(index === x) return true;
+
+    return d.feito;
+
+  });
+
+
+  if(ultimaDose){
+
+
+    let confirmou = confirm(
+      "💊 Confirma que realmente tomou o último remédio?"
+    );
+
+
+    if(!confirmou){
+
+      return;
+
+    }
+
+
+  }
+
+
+}
+
+
+// altera estado
+
+dose.feito = !dose.feito;
+
 
 
 if(
 remedios[i].doses.every(d=>d.feito)
 ){
 
+setTimeout(()=>{
+
 mostrarParabens(remedios[i].nome);
+
+},300);
 
 }
 
 
+
+salvar();
+
 render();
+
 
 }
 
